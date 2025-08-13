@@ -1,1 +1,3 @@
 TOKEN = "vk1.a.49P6Futh-NMc6d1cicYapd9tGutsp6szbnaeMaSQe-15tYjL_kaob1cmcDBRRu5ptZb8RCu0xsADIFX98C6zLfPrmlKs-Mht2zSopfNm-sVh3G7GEjfh12oUfh4GuBh-AbJOkOS5ksvny70a7xW6qH-7AqYwyP5VgnsXAf1PJfbtsWa4tL0vsatDjea9jnxXvqFAaRV_OlJC4kIdfij7kg"
+
+DATABASE_URL= "postgresql://postgres:postgres@localhost:5432/vkinder_db"

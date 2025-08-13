@@ -18,7 +18,7 @@ longpoll = VkLongPoll(vk_session)
 # Создание клавиатуры
 keyboard = VkKeyboard(one_time=True)
 keyboard.add_button('Вперед', color=VkKeyboardColor.SECONDARY)
-keyboard.add_button('Назад', color=VkKeyboardColor.POSITIVE)
+keyboard.add_button('Назад', color=VkKeyboardColor.POSITIVE) # - кажется тут дубль!
 keyboard.add_button('В избранное', color=VkKeyboardColor.POSITIVE)
 
 
@@ -50,6 +50,7 @@ def top_photo(user_id):
 
 
 ### БАЗОВЫЙ ЦИКЛ ЗАПУСКА БОТА
+print('Bot starting...')
 for event in longpoll.listen():
     if event.type == VkEventType.MESSAGE_NEW:
         if event.to_me:
