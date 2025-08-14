@@ -5,6 +5,7 @@ import vk_api
 from vk_api.longpoll import VkLongPoll, VkEventType
 from vk_api.keyboard import VkKeyboard, VkKeyboardColor
 from random import randrange
+import pprint
 
 from config_main import TOKEN, USER_TOKEN
 
@@ -29,8 +30,8 @@ keyboard.add_button('Избранное', color=VkKeyboardColor.PRIMARY)
 keyboard.add_button('Справка', color=VkKeyboardColor.PRIMARY)
 
 
-def first_sender(user_id, text): # функция отправки сообщения от бота к пользователю + клавиатура
-    vk.messages.send(user_id=user_id, message=text, random_id=randrange(10 ** 7), keyboard=keyboard.get_keyboard())
+def first_sender(user_id, text): # функция отправки первого сообщения от бота к пользователю
+    vk.messages.send(user_id=user_id, message=text, random_id=randrange(10 ** 7))
 
 def main_sender(user_id, text): # функция отправки сообщения от бота к пользователю + клавиатура
     vk.messages.send(user_id=user_id, message=text, random_id=randrange(10 ** 7), keyboard=keyboard.get_keyboard())
@@ -43,9 +44,10 @@ def top_photo(user_id):
     for album in albums['items']:
         album_id = album['id']
         # Получаем фотографии из альбома
-        photos_in_album = vk.photos.get(owner_id=user_id, album_id=album_id, count=1000)
+        photos_in_album = vk_user.photos.get(owner_id=user_id, album_id=album_id, count=1000, extended=1)
         for photo in photos_in_album['items']:
             # Добавляем фотографию и количество лайков в список
+
             photos.append({
                 'url': photo['sizes'][-1]['url'],
                 'likes': photo['likes']['count']
@@ -58,12 +60,30 @@ def top_photo(user_id):
     for photo in top_photos:
         print(f"URL: {photo['url']}, Likes: {photo['likes']}") #пока печать, потом записать в базу данных
 
-# функция получения данных о новом пользователе, после запуска бота, сюда же прописать работу с БД
+''' функция получения данных о новом пользователе, после запуска бота, сюда же прописать работу с БД
+
+
+'''
 def new_user(user_id):
-    user = vk.users.get(user_ids=user_id, fields='sex, home_town, bdate')
+    user = vk.users.get(user_ids=user_id, fields='sex, home_town, bdate, is_closed, has_photo')
+    print(user[0])
     return user[0] # на выходе словарь вида {'id': 175072795, 'bdate': '18.4.2007', 'home_town': 'Москва', 'sex': 2, 'first_name': 'Нияз', 'last_name': 'Нияз', 'can_access_closed': True, 'is_closed': False}
 
-# функция поиска пользователей по параметрам
+''' функция поиска пользователей по параметрам
+id - integer Идентификатор пользователя.
+
+is_closed - boolean Скрыт ли профиль пользователя настройками приватности.
+    
+can_access_closed - boolean Может ли текущий пользователь видеть профиль при is_closed = 1 (например, он есть в друзьях).
+
+bdate - string Дата рождения. Возвращается в формате D.M.YYYY или D.M (если год рождения скрыт). Если дата рождения скрыта целиком, поле отсутствует в ответе.
+
+has_photo - integer Информация о том, установил ли пользователь фотографию для профиля. Возвращаемые значения: 1 — установил, 0 — не установил.
+
+
+
+'''
+
 def user_search():
     # Параметры поиска
     params = {
@@ -87,14 +107,15 @@ def user_search():
         print("-" * 30)
 
 
-# ### БАЗОВЫЙ ЦИКЛ ЗАПУСКА БОТА
-for event in longpoll.listen():
-    if event.type == VkEventType.MESSAGE_NEW and event.to_me:
-        request = event.text.lower()
-        if request == "привет" or request == "/start":
-            main_sender(event.user_id, f"Хай, {event.user_id}")
-            new_user(event.user_id)
-
+# # ### БАЗОВЫЙ ЦИКЛ ЗАПУСКА БОТА
+# for event in longpoll.listen():
+#     if event.type == VkEventType.MESSAGE_NEW and event.to_me:
+#         request = event.text.lower()
+#         if request == "привет" or request == "/start":
+#             main_sender(event.user_id, f"Хай, {event.user_id}")
+#             new_user(event.user_id)
+top_photo(175072795)
+new_user(175072795)
 
 
 
