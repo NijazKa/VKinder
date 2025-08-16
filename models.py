@@ -11,10 +11,8 @@ class User(Base):
     first_name = sq.Column(sq.String(50))
     second_name = sq.Column(sq.String(50))
     user_age = sq.Column(sq.Integer)
-    search_city_id = sq.Column(sq.Integer)
-    search_age_from = sq.Column(sq.Integer)
-    search_age_to = sq.Column(sq.Integer)
-    user_sex = sq.Column(sq.Integer) # 1 - женский, 2 - мужской
+    city = sq.Column(sq.String(50))
+    user_sex = sq.Column(sq.Integer)
     last_updated_info = sq.Column(sq.DateTime)
 
 class Candidate(Base):
@@ -45,7 +43,7 @@ class UserInteraction(Base):
     user_inter_id = sq.Column(sq.Integer, primary_key=True)
     user_id = sq.Column(sq.Integer, sq.ForeignKey('users.user_id'), nullable=False)
     candidate_id = sq.Column(sq.Integer, sq.ForeignKey('candidates.candidate_id'), nullable=False)
-    status = sq.Column(sq.String(20)) # Например, 'viewed', 'liked', 'blocked'
+    status = sq.Column(sq.String(20)) # 'seen', 'liked'
     created_at = sq.Column(sq.DateTime, server_default=sq.func.now())
     
     user = relationship(User)
