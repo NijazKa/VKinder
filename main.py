@@ -64,6 +64,7 @@ def new_user(user_id):
     key1 = 'home_town'
     key2 = 'bdate'
     if key1 in user[0] and key2 in user[0] and user[0]['is_closed'] == False:
+        # добавляем пользователя в БД
         print('все ок')
     else:
         print('надо выполнить все условия')
@@ -98,14 +99,9 @@ def user_search(hometown='Kazan', sex=1, age_from=18, age_to=25):
 
     # Выполнение поиска
     users = vk_user.users.search(**params)
-    i = random.randint(0, len(users['items']) - 1)
-    print(i)
-    pprint.pprint(users['items'][0])
-    # Обработка результатов
-    # for user in users['items']:
-    #     print(f'Ссылка на профиль https://vk.com/id{user['id']}')
-    #     print(f"Имя: {user['first_name']} {user['last_name']}")
-    #     top_photo(user['id'])
+    i = random.randint(0, len(users['items']) - 1) # рандомная выдача пользователя
+
+    ### МЕСТО ДЛЯ ФУНКЦИИ ДОБАВЛЕНИЯ ИНФОРМАЦИИ О ПРОСМОТРЕННОМ ПОЛЬЗОВАТЕЛЕ В БД ###
     return f'Ссылка на профиль https://vk.com/id{users['items'][i]['id']} \nИмя: {users['items'][i]['first_name']} {users['items'][i]['last_name']} \n{top_photo(users['items'][i]['id'])}'
 
 '''функция вызывается после нажатия кнопки Вперед
@@ -118,8 +114,14 @@ def next_user():
 
 '''Функция установки лайка пользователю
 Добавляет id пользователя в базу данных и присваивает ему параметр 1 (0 у просмотренных пользователей) 
-
 '''
+def like(user_id):
+    # получить id последнего просмотренного пользователя из БД и поменять у него параметр
+    pass
+
+def previous_user(user_id):
+    # получить из таблицы -2 добавленного пользователя и вывести данные по нему в бота
+    pass
 
 
 # ### БАЗОВЫЙ ЦИКЛ ЗАПУСКА БОТА
