@@ -22,7 +22,6 @@ vk_user = vk_user_session.get_api()
 
 # Создание клавиатуры
 keyboard = VkKeyboard(one_time=True)
-keyboard.add_button('Назад', color=VkKeyboardColor.SECONDARY)
 keyboard.add_button('Лайк', color=VkKeyboardColor.POSITIVE) #
 keyboard.add_button('Вперед', color=VkKeyboardColor.SECONDARY)
 keyboard.add_button('Избранное', color=VkKeyboardColor.PRIMARY)
@@ -120,7 +119,7 @@ def user_search(city, sex, age):
         'hometown': city,  # название города
         'age': age,  # соотв. возрасту пользователя
         'sex': sex,  # Пол (1 - женский, 2 - мужской)
-        'count': 50  # Количество результатов
+        'count': 1000  # Количество результатов
     }
 
     # Выполнение поиска
@@ -150,6 +149,7 @@ def user_search(city, sex, age):
 def like_candidate(user_id):
     #if event.text.lower() == 'лайк':
     """Здесь должна быть логика прописанная на событие "лайк", надо добавить память боту"""
+    
     ses = SessionLocal()
     user_id = event.user_id      
     new_candidate = Candidate(vk_id=candidate_vk_id,
@@ -167,25 +167,10 @@ def like_candidate(user_id):
         
     # return f'Ссылка на профиль https://vk.com/id{users['items'][i]['id']} \nИмя: {users['items'][i]['first_name']} {users['items'][i]['last_name']} \n{top_photo(users['items'][i]['id'])}'
 
-'''функция вызывается после нажатия кнопки Вперед
-парсим данные о пользователях через функцию user_search
-не знаю надо ли выносить это в отдельную функцию
-'''
-def next_user():
-    user_search()
-    pass
 
-'''Функция установки лайка пользователю
-Добавляет id пользователя в базу данных и присваивает ему параметр 1 (0 у просмотренных пользователей) 
-'''
-def like(user_id):
-    # получить id последнего просмотренного пользователя из БД и поменять у него параметр
-    pass
 
-def previous_user(user_id):
-    # получить из таблицы -2 добавленного пользователя и вывести данные по нему в бота
+def favourites_users(user_id): #выдача списка избранных кандидатов
     pass
-
 
 # ### БАЗОВЫЙ ЦИКЛ ЗАПУСКА БОТА
 for event in longpoll.listen():
