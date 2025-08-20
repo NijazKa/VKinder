@@ -36,7 +36,7 @@ pip install -r requirements.txt
 3. Создайте файл .env в корневой папке проекта и добавьте в него следующие переменные, подставив свои значения:
 
 ```python
-# config.py
+# .env
 TOKEN = 'ваш_групповой_токен_сообщества'  # Обязательный
 USER_TOKEN = 'ваш_пользовательский_токен'       # Обязательный
 DATABASE_URL = "postgresql://user:password@localhost:5432/database_name" # Ссылка для подключения к БД (по умолчанию postgresql)
