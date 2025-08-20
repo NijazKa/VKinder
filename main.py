@@ -1,4 +1,3 @@
-import json
 from dataclasses import fields
 from datetime import datetime
 from sqlalchemy.orm import joinedload
@@ -22,7 +21,7 @@ vk_user = vk_user_session.get_api()
 
 # Создание клавиатуры
 keyboard = VkKeyboard(one_time=True)
-keyboard.add_button('Лайк', color=VkKeyboardColor.POSITIVE) #
+keyboard.add_button('Лайк', color=VkKeyboardColor.POSITIVE) 
 keyboard.add_button('Вперед', color=VkKeyboardColor.SECONDARY)
 keyboard.add_button('Избранное', color=VkKeyboardColor.PRIMARY)
 keyboard.add_button('Справка', color=VkKeyboardColor.PRIMARY)
@@ -162,8 +161,8 @@ def user_search(user_vk_id):
                                   owner_id=photo['owner_id'],
                                   count_likes=photo['likes'],
                                   attachment=photo['attachment'])
-            ses.add(new_photo)
-            break
+                ses.add(new_photo)
+                break
     ses.commit()
     ses.close()
 
@@ -204,30 +203,21 @@ for event in longpoll.listen():
     if event.type == VkEventType.MESSAGE_NEW and event.to_me:
         user_id = event.user_id
         request = event.text.lower()
-        if request == "привет" or request == "/start":
-            new_user(user_id)
+        if request == 'привет' or request == '/start': 
+            #new_user(user_id)
             main_sender(event.user_id, f"Хай, для старта нажми кнопку Вперед")
             new_user(event.user_id)
-        elif request == "начать":
-            main_sender(event.user_id, f"Хай, для старта нажми кнопку Вперед")
-
         elif request == "вперед":
             user_search(event.user_id) 
         elif request == "лайк":
             like_candidate(event.user_id)
-        elif request == "назад":
-            pass
         elif request == "избранное":
-            favourites_users(event.user_id)
+            new_user(user_id)
         elif request == "справка":
-            pass
+            main_sender(event.user_id, f'Добро пожаловать в умного бота VK\nДля работы с ботом Вам\
+                        необходимо получить TOKEN на странице https://vkhost.github.io/ \nПосле этого\
+                        Вам будут предлагаться пользователи, с которыми вы можете познакомиться')
         else:
             main_sender(event.user_id, f"Не поняла вашей команды")
 
 
-#top_photo(208471155)
-#new_user(196463845)
-
-#user_search()
-
-# 1
