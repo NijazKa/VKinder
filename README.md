@@ -65,7 +65,7 @@ python main.py
 VKinder/
 ├── database.py           # Скрипт для создания структуры БД
 ├── main.py              # Основной файл для запуска бота
-├── config.py    # Пример файла конфигурации
+├── config.example.py    # Пример файла конфигурации
 ├── requirements.txt     # Список зависимостей
 ├── .gitignore          # Файлы и папки, игнорируемые Git
 ├── models.py            # Модели SQLAlchemy (Пользователь, Избранное)
