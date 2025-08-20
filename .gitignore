@@ -5,3 +5,4 @@ config_main.py
 test.py
 .idea
 config.py
+.env

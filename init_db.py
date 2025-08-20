@@ -1,5 +1,5 @@
-from database import engine
-from models import Base
+from vk_bot.database import engine
+from vk_bot.models import Base
 
 # Функция для создания таблиц в базе данных
 def create_tables(engine):
